@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
+
+    <!-- PAGE TITLE -->
+    <title>Costs and Referrals</title>
+
+    <!-- CSS  -->
+    <!-- Libraries -->
+    <link href="css/lib/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <link href="css/lib/nv.d3.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Josefin+Sans:100,300,400,600,600i,700|Josefin+Slab:100,300,400,600,700" rel="stylesheet">
+    <!-- Your CSS Here -->
+    <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+
+</head>
+
+<body>
+<div id="tooltip" class="tooltip"></div>
+
+<!-- MAIN PAGE -->
+<div id="main">
+    <!-- Graph Title -->
+    <div class="section center-align titleSection z-depth-1-half white">
+        <div class="row">
+            <div class="col s12">
+                <h1>Costs and Referrals</h1>
+            </div>
+        </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- Graph Holder (Copy paste for multiple) -->
+    <div class="section z-depth-1-half white">
+        <div class="row">
+            <div class="col s12">
+                <div id="byMinor">
+                    <div class="row left-align">
+                        <div class="col s12">
+                            <h3>Variation by Procedure</h3>
+                        </div>
+                    </div>
+                    <div class="row indiv-container indiv-header clickable blue-grey lighten-5">
+                        <div class="col s1 label">#</div>
+                        <div class="col s3 label">Procedure</div>
+                        <div class="col s8 bullet">Cost Variation</div>
+                    </div>
+                    <div class="lg-container">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Graph Holder (Copy paste for multiple) -->
+    <div class="section z-depth-1-half white">
+        <div class="row">
+            <div class="col s12">
+                <div id="byPCP">
+                    <div class="row left-align">
+                        <div class="col s12">
+                            <h3>Provider Scorecard</h3>
+                        </div>
+                    </div>
+                    <div class="row indiv-container indiv-header clickable blue-grey lighten-5">
+                        <div class="col s1 label">Mbrs</div>
+                        <div class="col s2 label">PCP</div>
+                        <div class="col s2 bullet">Cost Variation</div>
+                        <div class="col s7 procedures">Procedure Categories</div>
+                    </div>
+                    <div class="lg-container">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Add a second graph by copying/pasting the Graph Holder code (make sure to give a unique ID) -->
+</div>  
+
+    
+<div id="modal1" class="modal">
+<div class="modal-content">
+    <div class="row"><div class="col s12 modal-header"></div></div>
+    <div class="row"><div class="col s12 modal-body"></div></div>
+</div>
+</div>
+
+
+<!-- FOOTER (OPTIONAL) -->
+<footer class="page-footer blue-grey">
+    <div class="footer-copyright">
+        <div class="row">
+            <div class="col s12 center-align">
+                &copy; 2015 Arcadia Solutions
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- SCRIPTS -->
+    <!-- Libraries -->
+    <script src="js/lib/d3.min.js"></script>
+    <script src="js/lib/queue.min.js"></script>
+    <script src="js/lib/nv.d3.min.js"></script>
+    <script src="js/lib/topojson.min.js"></script>
+    <script src="js/lib/jquery-1.10.2.min.js"></script>
+    <script src="js/lib/materialize.min.js"></script>
+    <script src="js/lib/materializeColors.js"></script>
+
+    <!-- Your Scripts Here -->
+    <script src="js/helpers.js"></script>
+    <script src="js/prepData.js"></script>
+    <script src="js/draw.js"></script>
+
+    <!-- Initialize Page -->
+    <script src="js/init.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,277 @@
+.container {
+    width: 100%;
+    max-width: 100%;
+}
+
+.axis path {
+    stroke: none;
+}
+.axis.big text {
+    font-size: 1.5em;
+    font-weight: 400;
+}
+
+h1,h2,h3,h4 {
+    font-weight: 400;
+    font-family: "Josefin Slab", sans-serif;
+}
+h5 {
+    font-weight: 400;
+}
+.axis.axisLabel text {
+    font-weight: 400;
+}
+
+.timelinePath {
+    fill: none;
+    stroke-width: 3px;
+    stroke-linecap: round;
+}
+
+#volume {
+    position:relative;
+}
+
+.y-scroll-container {
+    overflow-y: scroll;
+}
+
+.small-chart .y-scroll-container {
+    max-height: 300px
+}
+
+.small-chart .chart-header {
+    text-transform: uppercase;
+}
+
+.focus {
+    cursor: pointer; cursor: hand;
+}
+
+.tooltip {
+    white-space: pre-wrap;
+    text-align: left;
+    position: absolute;
+    padding: .2em 1em;
+    visibility:hidden;
+    z-index: 999999 !important;
+    max-width: 400px;
+    font-family: "Josefin Slab";
+}
+
+.nvtooltip, .tooltip {
+    -webkit-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+    -moz-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+    background-color: #323232;
+    color: #fff;
+    font-weight: 200;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+}
+.nvtooltip p, .nvtooltip h5, .tooltip p, .tooltip h5 {
+    margin: 0;
+    padding: 5px 14px;
+    text-align: left;
+    color: #fff;
+}
+
+
+.nvtooltip h3 {
+    font-weight: 600;
+    font-size: 1em;
+    background-color: transparent;
+    border: none;
+}
+
+.y-scroll-container::-webkit-scrollbar {
+    display: none;
+}
+
+.btn-floating {
+    margin-right: 20px;
+    margin-left: 20px;
+}
+
+.hidden {
+    height: 0;
+    visibility: hidden;
+    display: none;
+}
+
+svg text {
+    font-family: "Josefin Sans", sans-serif;
+    font-weight: 400;
+    fill: #000000;
+}
+
+.btn {
+    margin-left:2px;
+    margin-right:2px;
+}
+.zip {
+    cursor: pointer; cursor: hand;
+}
+
+.material-tooltip {
+    white-space: pre-wrap;
+    text-align: left;
+    min-width: 300px;
+}
+
+html {
+    font-family: "Josefin Sans", sans-serif;
+}
+
+svg text {
+    font-family: "Josefin Sans";
+}
+
+a {
+    color: #c3cacb;
+}
+
+a:hover {
+    color: #4aabc5;
+}
+
+.clickable {
+    cursor: pointer; cursor: hand;
+}
+
+
+.titleSection h1 {
+    margin-top: 0;
+    text-shadow: 4px 4px #b3e5fc; 
+    text-transform: uppercase;
+    font-family: "Josefin Sans", sans-serif;
+    font-weight:300;
+}
+.titleSection p {
+    font-weight: 400;
+}
+.titleSection {
+    padding: 1em 4em;
+}
+.page-footer .footer-copyright {
+    padding: 0 4em;
+}
+.titleSection .row {
+    margin-bottom: 0;
+}
+.mid-marker {
+    fill: #b0bec5;
+    stroke: #90a4ae;
+    stroke-width: 1px;
+}
+.lg-container {
+    max-height: 60vh;
+    overflow-y: scroll;
+}
+.row.indiv-container {
+    margin-bottom: 0;
+    border-bottom: 1px solid #eceff1;
+}
+.row.indiv-container.indiv-header {
+    padding-top: 1em;
+    padding-bottom: 1em;
+}
+.row.indiv-container:hover {
+    background-color: #eceff1;
+}
+line.extent-path {
+    stroke: #607d8b;
+    stroke-opacity: .3;
+    stroke-width: 1px;
+}
+line.extent-path-wide {
+    stroke-width: 6px;
+}
+line.extent-path-very-wide {
+    stroke-width: 12px;
+}
+.label {
+    color: #37474f;
+}
+.indiv-container .col {
+    border-right: 1px solid #eceff1;
+}
+
+#main {
+    width: 80%;
+    margin-left: 10%;
+}
+
+html,body {
+    background-color: #e5e8e9;
+}
+
+path.minorLine {
+    stroke-width: 1px;
+    stroke: rgba(0,0,0,.25);
+}
+
+circle.target-prov {
+    stroke: #000000;
+    fill-opacity: .5;
+    stroke-opacity: .1;
+    stroke-width: 1px;
+}
+circle.target-prov:hover {
+    fill-opacity: .75;
+}
+.modal {
+    max-height: 96%;
+    width: 96%;
+    top: 2% !important;
+}
+.radial-line {
+    stroke: rgba(0,0,0,.2);
+    stroke-width: 1px;
+    fill: none;
+}
+#header-img {
+    position: absolute;
+    top: 0;
+}
+#footer-img {
+    position: absolute;
+    bottom: -120px;
+}
+
+.row.card-header {
+    background-color: #31849a;
+    color: #FFFFFF;
+    font-family: "Maven Pro", sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: .9rem;
+    margin-bottom: 0;
+}
+
+.card .card-header {
+    padding: 8px 0;
+}
+.row .col.card {
+    padding:0;
+}
+.row .card-body {
+    min-height: 60vh;
+}
+#main {
+    margin-top: 100px;
+}
+.nav-btns {
+    margin-bottom: 2em;
+}
+.nav-btns a.btn {
+    background-color: #31849a;
+    font-family: "Maven Pro", sans-serif;
+    font-size: .9em;
+    font-weight: 700;
+    height: 32px;
+    line-height: 32px;
+    padding-left: 12px;
+    padding-right: 12px;
+}

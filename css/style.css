@@ -11,6 +11,34 @@
     font-weight: 400;
 }
 
+
+.card-body {
+    overflow: visible;
+}
+
+.y.axis path {
+    fill:none;
+/*
+    stroke: #000;
+  shape-rendering: crispEdges;  
+*/
+}
+.x.axis path {
+       fill:none; 
+/*
+    stroke: #000;
+  shape-rendering: crispEdges;  
+*/
+}
+
+svg.main {
+    overflow: visible;
+   // padding-left: 10px;
+    margin-left: 40px;
+    margin-top: 40px;
+}
+
+
 h1,h2,h3,h4 {
     font-weight: 400;
     font-family: "Josefin Slab", sans-serif;
@@ -105,6 +133,11 @@ svg text {
     font-weight: 400;
     fill: #000000;
 }
+
+.minor-blob {
+    stroke-linejoin: round;
+}
+
 
 .btn {
     margin-left:2px;
@@ -240,6 +273,12 @@ circle.target-prov:hover {
     bottom: -120px;
 }
 
+.minor-blob {
+/*    fill: rgba(0,0,0,.3);*/
+    stroke: black;
+    fill: none;
+}
+
 .row.card-header {
     background-color: #31849a;
     color: #FFFFFF;
@@ -257,7 +296,7 @@ circle.target-prov:hover {
     padding:0;
 }
 .row .card-body {
-    min-height: 60vh;
+    min-height: 80vh;
 }
 #main {
     margin-top: 100px;

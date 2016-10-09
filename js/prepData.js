@@ -3,6 +3,8 @@ var stats = ["Cost","EventsPer1000","CostPerEvent"];
 
 function prepData(costData, providerData) {
     console.log([costData,providerData]);
+    var maxEvt= 0;
+    
     
     // BASIC PROVIDER DATA CLEANSE
     providerData = convertNumFields(providerData, ["MemberMonths","ProviderID"]);
@@ -21,7 +23,64 @@ function prepData(costData, providerData) {
     var minorMajorMap = {};
     d3.nest().key(function(d){return d.Minor}).entries(costData).forEach(function(d){minorMajorMap[d.key] = d.values[0].Major});
     
-    // NEST BY PROCEDURE
+
+    function notDiagnostic(value) {
+        var forbidden = ['Evaluation and Therapeutic Procedures', 'Other diagnostic procedures (interview, evaluation, consultation)', 'Other diagnostic procedures (interview, evaluation, consultation)','Psychological and psychiatric evaluation and therapy', 'Other diagnostic procedures (interview, evaluation, consultation)', 'Psychological and psychiatric evaluation and therapy'];
+        return forbidden.indexOf(value.Minor) == -1 && value.CostPerEvent > 0 && value.Major!='Evaluation and Therapeutic Procedures';       
+    }
+    
+    costData = costData.filter(notDiagnostic);
+        
+    // NEST BY PROCEDURE - changed to major
+    var ProcedureNestByMajor = d3.nest().key(function(d){return d.Major}).key(function(d){return d.Minor}).entries(costData);  
+
+    ProcedureNestByMajor.forEach(function(d){
+    d.Major = d.key;
+    d.Minors = d.values;
+        d.Minors.forEach(function (d2){
+            d2.Minor = d2.key;
+            d2.lineValues = 
+            
+            d2.PCPNest = d3.nest().key(function(d){return d.PCPID}).entries(d2.values);
+            d2.PCPNest.forEach(function(dd){
+                dd.PCPID = +dd.key;
+                dd.CostPerEvent = 
+                    d3.sum(dd.values, function(n){return +n.Cost})/d3.sum(dd.values, function(n){return n.Frequency});
+                dd.EventsPer1000 =
+                    d3.sum(dd.values, function(n){return +n.Frequency})*1000/ProviderMap[+dd.key].MemberMonths;
+                if (dd.CostPerEvent>0){
+                    maxEvt = Math.max(maxEvt, dd.EventsPer1000);        
+                }
+          
+            });  
+                  
+        //FILTER ME
+        var noZeroCostPlease = function(value){
+            return value.CostPerEvent > 0 && value.EventPer1000 !=Infinity && value.CostPerEvent !=Infinity ;
+        };
+        d2.PCPNest.filter(noZeroCostPlease);    
+
+        d2.PercentilesPCP = pctCalc(d2.PCPNest,["EventsPer1000","CostPerEvent"],pcts);
+        d.UniqueServiceProviders = d3.nest().key(function(dd){return dd.ServiceProviderID}).entries(d.values).length; 
+            
+            //FILTER OUT MINORS WITH ZERO COST AMONG ALL PROVS
+        if (d2.PercentilesPCP[90].CostPerEvent==0 ||    d2.PercentilesPCP[90].EventsPer1000==0 ){
+            function filterZero(val) {
+                return val.key != d2.key;
+            };
+            d.Minors.filter(filterZero);
+        };
+            
+        }); 
+        
+   
+//        var noZeroPCP = function(value){
+//            return value.PercentilesPCP[90].CostPerEvent > 0
+//        };
+    });    
+    
+//   console.log(ProcedureNestByMajor);
+
     var ProcedureNest = d3.nest().key(function(d){return d.Minor}).entries(costData);
     ProcedureNest.forEach(function(d){
         d.Minor = d.key;
@@ -30,13 +89,22 @@ function prepData(costData, providerData) {
         d.PCPNest.forEach(function(dd){
             dd.CostPerEvent = 
                 d3.sum(dd.values, function(n){return n.Cost})/d3.sum(dd.values, function(n){return n.Frequency});
+            //store a max here
             dd.EventsPer1000 =
-                d3.sum(dd.values, function(n){return n.Frequency})*1000/ProviderMap[+dd.key].MemberMonths;
+                d3.sum(dd.values, function(n){return n.Frequency})*1000/ProviderMap[+dd.key].MemberMonths || 0;
         });
+        var noZeroCostPlease = function(value){
+            return value.CostPerEvent > 0;
+        };
+        d.PCPNest.filter(noZeroCostPlease);
         d.PercentilesPCP = pctCalc(d.PCPNest,["EventsPer1000","CostPerEvent"],pcts);
         d.UniqueServiceProviders = d3.nest().key(function(dd){return dd.ServiceProviderID}).entries(d.values).length;
     });
     
+
+    
+    
+
     // NEST BY PCP
     var PCPNest = d3.nest().key(function(d){return d.PCPID}).entries(costData);
     PCPNest.forEach(function(d){
@@ -65,7 +133,7 @@ function prepData(costData, providerData) {
         
     });
     
-    return {ProviderMap: ProviderMap, ProcedureNest: ProcedureNest, PCPNest: PCPNest, CostData:costData}
+    return {ProviderMap: ProviderMap, ProcedureNest: ProcedureNest, PCPNest: PCPNest, CostData:costData, MajorNest: ProcedureNestByMajor, MaxEvtPer1000: maxEvt}
     
 }
 

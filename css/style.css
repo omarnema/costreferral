@@ -12,6 +12,7 @@
 }
 
 
+
 .card-body {
     overflow: visible;
 }
@@ -23,13 +24,51 @@
   shape-rendering: crispEdges;  
 */
 }
-.x.axis path {
-       fill:none; 
 /*
-    stroke: #000;
-  shape-rendering: crispEdges;  
-*/
+.x.axis .tick text {
+    transform:rotate(-90deg);
 }
+*/
+
+.pcp-point {
+    visibility:hidden;
+}
+
+.tick text {
+    font-size: 14px;
+    font-family 'Inconsolata';
+}
+.x.axis path {
+    fill:none; 
+}
+
+.inner-band:hover{
+    fill:rgba(0,0,0,.5);
+    cursor:pointer;
+}
+/*
+.inner-band:nth-child(2){
+  z-index: 5;  
+};
+*/
+/*//YO*/
+.inner-band {
+    transition: opacity .2s ease-in-out;
+    fill: rgba(0,0,0,.2);
+    stroke: none;
+}
+.minor-blob {
+    stroke-linejoin: round;
+}
+.minor-point {
+    cursor:pointer;
+    fill: rgba(0,0,0,.4);
+    stroke: none;
+}
+.minor-point:hover{
+    r: 8;
+}
+
 
 svg.main {
     overflow: visible;
@@ -134,9 +173,7 @@ svg text {
     fill: #000000;
 }
 
-.minor-blob {
-    stroke-linejoin: round;
-}
+
 
 
 .btn {
@@ -296,7 +333,7 @@ circle.target-prov:hover {
     padding:0;
 }
 .row .card-body {
-    min-height: 80vh;
+    min-height: 100vh;
 }
 #main {
     margin-top: 100px;

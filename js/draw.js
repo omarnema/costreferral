@@ -28,6 +28,7 @@ function start(error, costData, providerData) {
     
     // DRAW FUNCTIONS
     function drawProcedurePlot(clear, xMinInput, yMinInput) {
+        
         goToPane("ProcedurePlot");
         clear=typeof clear =='undefined'?false:clear;
         var div = d3.select("#ProcedurePlot .card .card-body");
@@ -35,6 +36,7 @@ function start(error, costData, providerData) {
         var tooltip = div.append('div').attr('class', 'tooltip');
         var thisData = data.MajorNest;
         console.log(thisData);
+        console.log('ereraera');
         
    
         var width = .8*$("#ProcedurePlot .card .card-body").width();
@@ -53,41 +55,15 @@ function start(error, costData, providerData) {
         var xBandScale = d3.scale.linear().range([-width*multiplier, width*multiplier]).domain([-10, 10]);
         var yBandScale = 
         d3.scale.linear().range([height*multiplier, -height*multiplier]).domain([-10, 10]);
+
         
-        //abstract axis plotting and scaling
-        //
-//        function plotAxes(init, xscale, yscale, xTickvalues, yTickvalues, xRange, yRange){
-//            
-//            //bind data to axis
-//            
-//            if (init){
-//
-//            }
-//            else {
-//                
-//                d3.svg.axis().scale(xScale).orient('bottom');
-//                d3.svg.axis().scale(yScale).orient('left');
-//            }
-//
-//
-//        };
+        var xScale = d3.scale.pow().exponent(.63).range([0,width]).domain([.01, 300]);        
+        var yScale = d3.scale.pow().exponent(.005).range([height, 0]).domain([.1, 10]);
+        var xAxis = d3.svg.axis().scale(xScale).orient('bottom').tickValues([0, 10, 100, 200, 300]);
+        var yAxis = d3.svg.axis().scale(yScale).orient('left').tickValues([0,  1, 2, 4, 6, 10]);
+        svg.append('g').attr('class', 'x axis').attr("transform", "translate(0," + height + ")").call(xAxis);
+        svg.append("g").attr("class", "y axis").call(yAxis); 
         
-        //change data - only included minor, everything else removed
-        //xScale changed..
-        
-                var xScale = d3.scale.pow().exponent(.39).range([0,width]).domain([.01, 2000]);        
-                var yScale = d3.scale.pow().exponent(.005).range([height, 0]).domain([.1, 10]);
-                var xAxis = d3.svg.axis().scale(xScale).orient('bottom').tickValues([0, 10, 100, 500, 1000, 2000]);
-                var yAxis = d3.svg.axis().scale(yScale).orient('left').tickValues([0,  1, 2, 4, 6, 10]);
-                svg.append('g').attr('class', 'x axis').attr("transform", "translate(0," + height + ")").call(xAxis);
-                svg.append("g").attr("class", "y axis").call(yAxis); 
-        
-        
-            ///
-        
-//        plotAxes(true);
-  
-        //min / max determined by 10th and 90th percentiles vals
 
         var majors = svg.selectAll('.major').data(thisData);
         majors.enter().append('g').attr('class', 'major');
@@ -100,6 +76,7 @@ function start(error, costData, providerData) {
         var leftOffset = $('.main').offset().left ;
         var topOffset = $('.main').offset().top ;
         
+        
         //ADD IN ALL PCP PTS AND HIDE - only show when expanding single Minor
         pcpPoints = minors.selectAll('.pcp-point').data(function(d){
            return d.PCPNest ;
@@ -107,22 +84,36 @@ function start(error, costData, providerData) {
         pcpPoints.enter().append('circle').attr('class', 'pcp-point')
             .attr('r', 1)
             .attr('cx', function(d){
-            return  xScale(Math.min(Math.max(.1, d.CostPerEvent), 2000)) })
+            return  xScale(Math.min(Math.max(.1, d.CostPerEvent), 300)) })
             .attr('cy', function(d){return yScale(Math.min(60,d.EventsPer1000)) });
         pcpPoints.exit().remove();
+
+        ///ALL PERCENTILE POINTS    
+//        pctPoints = minors.selectAll('.pct-point').data(function(d){
+//            console.log(d);
+//           return d.PercentilesPCP ;
+//        });
+//        pctPoints.enter().append('circle').attr('class', 'pct-point')
+//            .attr('r', 3)
+//            .attr('cx', function(d){
+//            return  xScale(Math.min(Math.max(.1, d.CostPerEvent), 2000)) })
+//            .attr('cy', function(d){return yScale(Math.min(60,d.EventsPer1000)) });
+//        pctPoints.exit().remove();
+//        
+//        
         
         //ADD IN MEDIAN POINT
         minorPoints = minors.selectAll('.minor-point.median').data(function(d){ return [d.PercentileBands]});
         var minorPointEnter = minorPoints.enter().append('circle').attr('class', 'minor-point median')
             .attr('r', 1)
             .attr('cx', function(d){
-            return  xScale(Math.min(Math.max(.1, d.Median.CostPerEvent), 2000)) })
+            return  xScale(Math.min(Math.max(.1, d.Median.CostPerEvent), 300)) })
             .attr('cy', function(d){return yScale(Math.min(60,d.Median.EventsPer1000)) });
         minorPoints.exit().remove();  
         
         var innerline = d3.svg.line()
                 .x(function(d){return  xBandScale(Math.min(d.x), 10)+ 
-                xScale( Math.min(Math.max(.1, d.Median.CostPerEvent), 2000) )  })
+                xScale( Math.min(Math.max(.1, d.Median.CostPerEvent), 300) )  })
                 .y(function(d){return yBandScale(Math.min(10,d.y)) +  yScale(Math.min(10,d.Median.EventsPer1000))
                               })
             .interpolate('basis-closed') ;    
